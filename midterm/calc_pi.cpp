@@ -13,7 +13,7 @@ int main(int argc, char **argv)
     int nprocs, rank, m, circle_count = 0, chunk_size, val;
     double x, y, pi, stime, etime;
 
-    int n[] = {1e6, 5e6 1e7, 5e7};
+    double n[] = {1e6, 5e6, 1e7, 5e7};
 
     // MPI Init and rank
     MPI_Init(&argc, &argv);
@@ -29,8 +29,8 @@ int main(int argc, char **argv)
         m = atoi(argv[1]);
 
     int result_list[m];
-    int iteration_list[m];
-    int results[nprocs - 1][m];
+    double iteration_list[m] = {0};
+    int results[nprocs - 1][m] = {{0}};
 
     srand(SEED + rank); // Give rand() a seed value
 
@@ -39,28 +39,28 @@ int main(int argc, char **argv)
         // Generate iteration list
         for (int i = 0; i < m; i++)
         {
-            iteration_list[i] = n[srand() % 4];
+            iteration_list[i] = n[(rand() % 4)];
         }
 
         // Send the list to the other processors
         for (int i = 1; i < nprocs; i++)
         {
-            MPI_Send(&iteration_list, 4, MPI_INT, rank, rank, MPI_COMM_WORLD);
+            MPI_Send(&iteration_list, m, MPI_DOUBLE, i, i, MPI_COMM_WORLD);
         }
     }
     else
     {
         // Wait for iteration list
         MPI_Status status;
-        MPI_Recv(&iteration_list, 4, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+        MPI_Recv(&iteration_list, m, MPI_DOUBLE, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
     }
 
     // Run each iteration
-    for (int m_index = 0; m_index < m; a++)
+    for (int m_index = 0; m_index < m; m_index++)
     {
         circle_count = 0;
 
-        int niter = iteration_list[m_index];
+        double niter = iteration_list[m_index];
 
         // Calculate number of points for each rank
         chunk_size = niter / nprocs;
@@ -114,7 +114,7 @@ int main(int argc, char **argv)
         }
 
         etime = MPI_Wtime(); // end time
-        cout << "  " << setw(10) << "npoints"
+        cout << "  " << setw(10) << "m"
              << "  " << setw(10) << "pi"
              << "  " << setw(10) << "nprocs"
              << "  " << setw(30) << "elapsed wall-clock time"
