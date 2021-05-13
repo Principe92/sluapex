@@ -30,7 +30,13 @@ int main(int argc, char **argv)
 
     if (n > nprocs)
     {
-        rows = (n / nprocs) + 1;
+        rows = (n / nprocs);
+        int rem = n % nprocs;
+
+        if (rem != 0)
+        {
+	    rows += 1;
+        }
     }
 
     int A[n][n], B[n][n], C[n][n];
