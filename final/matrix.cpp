@@ -22,7 +22,7 @@ int main(int argc, char **argv)
     }
 
     int A[n][n], B[n][n], C[n][n];
-    int Apart[n], Bpart[n], Cpart[n];
+    int Apart[n], Bpart[n], Cpart[n] = {0};
 
     if (rank == MASTER)
     {
@@ -59,28 +59,39 @@ int main(int argc, char **argv)
 
     MPI_Scatter(&A, n, MPI_INT, &Apart, n, MPI_INT, MASTER, MPI_COMM_WORLD);
 
-    MPI_Bcast(&B, n, MPI_INT, MASTER, MPI_COMM_WORLD);
+    MPI_Bcast(&B, n*n, MPI_INT, MASTER, MPI_COMM_WORLD);
 
-    fill(Cpart[0], Cpart[0] + n, 0);
+    //fill(Cpart[0], Cpart[0] + n, 0);
+    cout << "Processor: " << rank << " has: " << endl;
+    for (int i = 0; i < n; i++)
+    	cout << Apart[i] << " ";
+    cout << endl << endl;
 
+    cout << "Processor: " << rank << " result is: " << endl;
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
         {
-            Cpart[i] += Apart[j] * B[i][j];
+            Cpart[i] += Apart[j] * B[j][i];
         }
+
+	cout << Cpart[i] << " ";
     }
+    cout << endl << endl;
 
     MPI_Gather(&Cpart, n, MPI_INT, &C, n, MPI_INT, MASTER, MPI_COMM_WORLD);
 
-    cout << "C: " << endl;
-    for (int i = 0; i < n; i++)
+    if (rank == MASTER)
     {
-        for (int j = 0; j < n; j++)
-            cout << C[i][j] << " ";
-        cout << endl;
+	    cout << "C: " << endl;
+	    for (int i = 0; i < n; i++)
+	    {
+		    for (int j = 0; j < n; j++)
+			    cout << C[i][j] << " ";
+		    cout << endl;
+	    }
+	    cout << endl;
     }
-    cout << endl;
 
     MPI_Finalize();
 
