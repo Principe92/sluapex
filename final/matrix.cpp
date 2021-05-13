@@ -38,15 +38,12 @@ int main(int argc, char **argv)
 
     if (rank == MASTER)
     {
-        // fill(A[0], A[0] + n*n, 1);
-        // fill(B[0], B[0] + n*n, 1);
-
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < n; j++)
             {
-                A[i][j] = i * n + j; // 1;
-                B[i][j] = i * n + j; // 1;
+                A[i][j] = 1;
+                B[i][j] = 1;
             }
         }
 
