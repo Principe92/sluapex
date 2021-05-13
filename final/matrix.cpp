@@ -3,6 +3,7 @@
 #include <cstdlib> // has exit(), etc.
 #include <ctime>
 #include "mpi.h" // MPI header file
+#include <time.h>
 #define MASTER 0
 
 using namespace std;
@@ -10,10 +11,14 @@ using namespace std;
 int main(int argc, char **argv)
 {
     int nprocs, rank;
+    double stime, etime;
 
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+    if (rank == MASTER)
+        stime = MPI_Wtime(); // start time
 
     int n = 4;
     if (argc >= 2)
@@ -68,13 +73,6 @@ int main(int argc, char **argv)
 
     MPI_Bcast(&B, n * n, MPI_INT, MASTER, MPI_COMM_WORLD);
 
-    cout << "Processor: " << rank << " has: " << endl;
-    for (int i = 0; i < n; i++)
-        cout << Apart[i] << " ";
-    cout << endl
-         << endl;
-
-    cout << "Processor: " << rank << " result is: " << endl;
     for (int k = 0; k < rows; k++)
     {
         for (int i = 0; i < n; i++)
@@ -83,12 +81,8 @@ int main(int argc, char **argv)
             {
                 Cpart[k][i] += Apart[k][j] * B[j][i];
             }
-
-            cout << Cpart[k][i] << " ";
         }
     }
-    cout << endl
-         << endl;
 
     MPI_Gather(&Cpart, rows * n, MPI_INT, &C, rows * n, MPI_INT, MASTER, MPI_COMM_WORLD);
 
@@ -102,6 +96,15 @@ int main(int argc, char **argv)
             cout << endl;
         }
         cout << endl;
+
+        etime = MPI_Wtime(); // end time
+        cout << "  " << setw(10) << "N"
+             << "  " << setw(10) << "nprocs"
+             << "  " << setw(30) << "elapsed wall-clock time"
+             << "\n";
+        cout << "  " << setw(10) << n
+             << "  " << setw(10) << nprocs
+             << "  " << setw(30) << etime - stime << "\n";
     }
 
     MPI_Finalize();
