@@ -21,8 +21,15 @@ int main(int argc, char **argv)
         n = atoi(argv[1]);
     }
 
+    int rows = 1;
+
+    if (n > nprocs)
+    {
+        rows = (n / nprocs) + 1;
+    }
+
     int A[n][n], B[n][n], C[n][n];
-    int Apart[n], Bpart[n], Cpart[n] = {0};
+    int Apart[rows][n], Cpart[rows][n] = {0};
 
     if (rank == MASTER)
     {
@@ -33,8 +40,8 @@ int main(int argc, char **argv)
         {
             for (int j = 0; j < n; j++)
             {
-                A[i][j] = i * n + j;
-                B[i][j] = i * n + j;
+                A[i][j] = i * n + j; // 1;
+                B[i][j] = i * n + j; // 1;
             }
         }
 
@@ -57,40 +64,44 @@ int main(int argc, char **argv)
         cout << endl;
     }
 
-    MPI_Scatter(&A, n, MPI_INT, &Apart, n, MPI_INT, MASTER, MPI_COMM_WORLD);
+    MPI_Scatter(&A, rows * n, MPI_INT, &Apart, rows * n, MPI_INT, MASTER, MPI_COMM_WORLD);
 
-    MPI_Bcast(&B, n*n, MPI_INT, MASTER, MPI_COMM_WORLD);
+    MPI_Bcast(&B, n * n, MPI_INT, MASTER, MPI_COMM_WORLD);
 
-    //fill(Cpart[0], Cpart[0] + n, 0);
     cout << "Processor: " << rank << " has: " << endl;
     for (int i = 0; i < n; i++)
-    	cout << Apart[i] << " ";
-    cout << endl << endl;
+        cout << Apart[i] << " ";
+    cout << endl
+         << endl;
 
     cout << "Processor: " << rank << " result is: " << endl;
-    for (int i = 0; i < n; i++)
+    for (int k = 0; k < rows; k++)
     {
-        for (int j = 0; j < n; j++)
+        for (int i = 0; i < n; i++)
         {
-            Cpart[i] += Apart[j] * B[j][i];
+            for (int j = 0; j < n; j++)
+            {
+                Cpart[k][i] += Apart[k][j] * B[j][i];
+            }
+
+            cout << Cpart[k][i] << " ";
         }
-
-	cout << Cpart[i] << " ";
     }
-    cout << endl << endl;
+    cout << endl
+         << endl;
 
-    MPI_Gather(&Cpart, n, MPI_INT, &C, n, MPI_INT, MASTER, MPI_COMM_WORLD);
+    MPI_Gather(&Cpart, rows * n, MPI_INT, &C, rows * n, MPI_INT, MASTER, MPI_COMM_WORLD);
 
     if (rank == MASTER)
     {
-	    cout << "C: " << endl;
-	    for (int i = 0; i < n; i++)
-	    {
-		    for (int j = 0; j < n; j++)
-			    cout << C[i][j] << " ";
-		    cout << endl;
-	    }
-	    cout << endl;
+        cout << "C: " << endl;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+                cout << C[i][j] << " ";
+            cout << endl;
+        }
+        cout << endl;
     }
 
     MPI_Finalize();
