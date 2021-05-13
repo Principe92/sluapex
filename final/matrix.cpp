@@ -1,10 +1,29 @@
 #include <iostream>
+#include <iomanip>
 #include <cstdlib> // has exit(), etc.
 #include <ctime>
 #include "mpi.h" // MPI header file
 #define MASTER 0
 
 using namespace std;
+
+template <size_t r, size_t l>
+void printArray(int array[r][l], int size)
+{
+    int i, j;
+
+    for (i = 0; i < size; i++)
+    {
+        for (j = 0; j < size; j++)
+        {
+            cout << array[i][j] << " ";
+        }
+
+        cout << endl;
+    }
+
+    cout << endl;
+}
 
 int main(int argc, char **argv)
 {
@@ -68,21 +87,4 @@ int main(int argc, char **argv)
     MPI_Finalize();
 
     return 0;
-}
-
-void printArray(int *array, int size)
-{
-    int i, j;
-
-    for (i = 0; i < size; i++)
-    {
-        for (j = 0; j < size; j++)
-        {
-            cout << array[i][j] << " ";
-        }
-
-        cout << endl;
-    }
-
-    cout << endl;
 }
