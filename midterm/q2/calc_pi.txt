@@ -1,0 +1,30 @@
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14166           1                           73.95
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14148           2                          39.185
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14136           4                         20.3912
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14159           8                         11.2147
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14118          16                         7.58456
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14256          32                         5.06471
+
+
+Extra Credit:
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14137           1                         74.0415
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14044           2                         40.6471
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14259           4                         26.3364
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14168           8                         16.5192
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14259          16                         10.7275
+           m          pi      nprocs         elapsed wall-clock time
+         100     3.14142          32                         6.27667
+
+
+The elapsed time decreased as the number of processors increased in both attempt as expected

@@ -1,0 +1,62 @@
+for 100,000,000
+[pokorie@hopper2 pokorie]$ mpirun -n 1 python pi_mpi4py.py
+Pi with 100000000 steps is 3.141593 in 0.508631 secs
+[pokorie@hopper2 pokorie]$ mpirun -n 2 python pi_mpi4py.py
+Pi with 100000000 steps is 3.141593 in 0.384764 secs
+[pokorie@hopper2 pokorie]$ mpirun -n 4 python pi_mpi4py.py
+Pi with 100000000 steps is 3.141593 in 0.449609 secs
+[pokorie@hopper2 pokorie]$ mpirun -n 8 python pi_mpi4py.py
+Pi with 100000000 steps is 3.141593 in 0.567990 secs
+[pokorie@hopper2 pokorie]$ mpirun -n 16 python pi_mpi4py.py
+Pi with 100000000 steps is 3.141593 in 0.834002 secs
+
+The runtime decreased as the number of processors increased until after 2 processors, then it started to increase
+
+for 1,000,000,000 iteration
+[pokorie@hopper2 pokorie]$ mpirun -n 1 python pi_mpi4py.py
+Pi with 1000000000 steps is 3.141593 in 2.356870 secs
+[pokorie@hopper2 pokorie]$ mpirun -n 2 python pi_mpi4py.py
+Pi with 1000000000 steps is 3.141593 in 1.496882 secs
+[pokorie@hopper2 pokorie]$ mpirun -n 4 python pi_mpi4py.py
+Pi with 1000000000 steps is 3.141593 in 0.937274 secs
+[pokorie@hopper2 pokorie]$ mpirun -n 8 python pi_mpi4py.py
+Pi with 1000000000 steps is 3.141593 in 0.816962 secs
+[pokorie@hopper2 pokorie]$ mpirun -n 16 python pi_mpi4py.py
+Pi with 1000000000 steps is 3.141593 in 0.877961 secs
+
+The runtime decreased as the number of processors increased until after 8 processors, then it started to increase
+
+CODE:
+import time
+from numba import jit
+from mpi4py import MPI
+
+@jit
+def loop(num_steps, begin, end):
+    step = 1.0/num_steps
+    sum = 0
+    for i in range(begin, end):
+        x = (i + 0.5) * step
+        sum = sum + 4.0/(1.0 + x*x)
+    return sum
+
+def Pi(num_steps):
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
+
+    begin = time.time()
+    num_steps_chunk = num_steps/size
+    local_sum = loop(num_steps, rank*num_steps_chunk, (rank+1)*num_steps_chunk)
+    sum = comm.reduce(local_sum, op=MPI.SUM, root=0) 
+    end = time.time()
+
+    if rank == 0:
+        pi = sum/num_steps
+        elapsed = end-begin
+        print("Pi with %d steps is %f in %f secs" %(num_steps, pi, elapsed))
+
+
+if __name__ == '__main__':
+    Pi(1000000000)
+

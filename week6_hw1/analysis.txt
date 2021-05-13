@@ -1,0 +1,33 @@
+For n=10,000,000
+     npoints          pi      nprocs         elapsed wall-clock time
+    10000000     3.14123           1                         1.06585
+     npoints          pi      nprocs         elapsed wall-clock time
+    10000000     3.14188           2                        0.664834
+     npoints          pi      nprocs         elapsed wall-clock time
+    10000000     3.14169           4                        0.333293
+     npoints          pi      nprocs         elapsed wall-clock time
+    10000000     3.14253           8                        0.167226
+     npoints          pi      nprocs         elapsed wall-clock time
+    10000000     3.14461          16                       0.0838998
+     npoints          pi      nprocs         elapsed wall-clock time
+    10000000     3.14343          32                        0.106871
+
+For n= 100,000,000
+     npoints          pi      nprocs         elapsed wall-clock time
+   100000000     3.14156           1                          5.8479
+     npoints          pi      nprocs         elapsed wall-clock time
+   100000000     3.14137           2                         3.38721
+     npoints          pi      nprocs         elapsed wall-clock time
+   100000000     3.14095           4                         1.93796
+     npoints          pi      nprocs         elapsed wall-clock time
+   100000000     3.14187           8                         1.14583
+     npoints          pi      nprocs         elapsed wall-clock time
+   100000000     3.14163          16                        0.811821
+     npoints          pi      nprocs         elapsed wall-clock time
+   100000000     3.14201          32                        0.579867
+
+
+Plot is included in the folder as: hmw_6.png.
+
+For both cases, the elapsed time decreased as the number of processors increased due to more distributed hands to divide labor. This, definitely, led to speedups as shown in hmw_6_speedup.png.
+However, for n=10,000,000 and at p=32, the elapsed time increased slightly compared to p=16.

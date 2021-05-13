@@ -1,0 +1,27 @@
+Q1. Set OMP_NUM_THREADS=1 in your terminal environment. Run the program with N=300000. What is the count of the prime numbers? What is the elapsed time (sec)?
+
+Sol: 25997 | 17.2419 seconds
+
+Q2. Set OMP_NUM_THREADS=2 in your terminal environment. Run the program with N=300000. Did you get the same count of the prime numbers as of Q1? What is the elapsed time (sec)? Did you get a shorter elapsed time compared to Q1?
+
+Sol: Yes | 12.3869 seconds | Yes, I got a shorter elapsed time
+
+Q3. Test the program with “static with chunk size 100”, the same N (300000), and the same threads (2). Then, report the wall-clock time. Compare your wall clock time to Q2. Did you get a better speed-up (shorter elapsed time)?
+
+Sol: 7.06482 seconds | Yes, I got a shorter elapsed time
+
+Q4. Test the program with “dynamic”, the same N (300000), and the same threads (2). Then, report the wall-clock time. Compare your wall clock time to Q2 (static default). Did you get a better speed-up (shorter elapsed time)?
+
+Sol: 6.93403 seconds | Yes, I got a shorter elapsed time
+
+Q5. Test the program with “dynamic with chunk size 100”, the same N (300000), and the same threads (2). Then, report the wall-clock time. Compare your wall clock time to Q4. Did you get a better speed-up (shorter elapsed time)?
+
+Sol: 7.05043 seconds | No, I got a longer elapsed time
+
+Q6. Test the program with “guided”, the same N (300000), and the same threads (2). Then, report the wall-clock time. Compare your wall clock time to Q2 (static default) and Q4 (dynamic default). Did you get a better speed-up (shorter elapsed time)?
+
+Sol: 6.94452 seconds | Compared to Q2, I got a shorter elapsed time | Compared to Q4, I got a slightly longer time
+
+Q7.  The code lines 49 and 50 report "Number of processors available" and "Number of threads". To get these value, I used omp_get_num_procs() and omp_get_max_threads() run-time library functions. Especially, I used omp_get_max_threads(), not omp_get_num_threads(). Why? Please describe your thoughts.
+
+Sol: This is because you want the maximum possible threads and not the number of threads currently running.

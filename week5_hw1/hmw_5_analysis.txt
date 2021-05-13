@@ -1,0 +1,38 @@
+Q1. The pseudocode shown below is the calculation of pi by the method of numeric integration. Complete the serial code. There are many ways to calculate the pi value. Your code should follow the pseudocode.
+         n                  Pi                            time
+  500000000             3.14159                          3.3269
+
+
+Q2. Parallelize it using the “reduction” clause and test it with P=1, 2, 4, 6, 8, 10. Run it on hopper.slu.edu and report the results as below. Hope you get a good speedup in this case.
+          n             threads                  Pi                            time
+  500000000                   1             3.14159                         3.14177
+          n             threads                  Pi                            time
+  500000000                   2             3.14159                         1.59397
+          n             threads                  Pi                            time
+  500000000                   4             3.14159                        0.835898
+          n             threads                  Pi                            time
+  500000000                   6             3.14159                        0.627596
+          n             threads                  Pi                            time
+  500000000                   8             3.14159                        0.484353
+          n             threads                  Pi                            time
+  500000000                  10             3.14159                        0.464415
+
+
+Q3. Change the “reduction” clause to use the “atomic” directive. Then, test it with P=1, 2, 4, 6, 8. Report the results as previously.
+         n             threads                  Pi                            time
+  500000000                   1             3.14159                         7.37923
+         n             threads                  Pi                            time
+  500000000                   2             3.14159                         32.2018
+         n             threads                  Pi                            time
+  500000000                   4             3.14159                         28.6271
+         n             threads                  Pi                            time
+  500000000                   6             3.14159                         31.8416
+         n             threads                  Pi                            time
+  500000000                   8             3.14159                         28.4773
+         n             threads                  Pi                            time
+  500000000                  10             3.14159                         33.3339
+
+
+Q4. Plot the speedup with three cases: ideal, reduction, and atomic as below, then provide your comments on why atomic is a bad idea for this case. I strongly recommend you to use R or MATLAB to plot it as below.
+Check out the png file: hmw_5.png
+Atomic is a bad idea because it introduces barrier and synchronization to the shared variable "sum" which increases the overall elapsed time.

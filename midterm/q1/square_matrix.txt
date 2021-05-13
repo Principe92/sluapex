@@ -1,0 +1,70 @@
+Static:
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   1               other                   0                         16.7853
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   2               other                   0                          8.0364
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   4               other                   0                         4.01147
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   8               other                   0                         2.23795
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                  16               other                   0                         1.64892
+
+
+Static, 10:
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   1               other                  10                          15.242
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   2               other                  10                         7.80606
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   4               other                  10                          4.3763
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   8               other                  10                         2.30655
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                  16               other                  10                         1.46736
+
+
+Dynamic:
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   1             dynamic                   1                         15.7491
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   2             dynamic                   1                         7.80587
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   4             dynamic                   1                          4.6183
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   8             dynamic                   1                         2.38072
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                  16             dynamic                   1                         1.41545
+
+
+Dynamic, 10:
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   1             dynamic                  10                         15.3132
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   2             dynamic                  10                         8.12131
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   4             dynamic                  10                         4.12227
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                   8             dynamic                  10                         2.37072
+
+         N  Number of processor   Number of threads            Schedule          Chunk size   Elapsed wall clock time (sec)
+      1000                  20                  16             dynamic                  10                         1.68193
+
+    
+    The elapsed time decreased as the number of threads increased for all the types of schedulers.
+    Static with chunk size of 10 had the best time among the 4 schedulers

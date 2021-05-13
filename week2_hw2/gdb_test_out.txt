@@ -1,0 +1,195 @@
+[pokorie@hopper2 hpc]$ vi hmw_2.cpp
+[pokorie@hopper2 hpc]$ g++ hmw_2.cpp -o hmw_2
+[pokorie@hopper2 hpc]$ ls
+hmw_2  hmw_2.cpp
+
+[pokorie@hopper2 hpc]$ g++ hmw_2.cpp -g -Wall -Werror -o hmw_2
+[pokorie@hopper2 hpc]$
+[pokorie@hopper2 hpc]$ gdb hmw_2
+GNU gdb (GDB) Fedora 9.1-7.fc32
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from hmw_2...
+(gdb)
+(gdb) break 11
+Breakpoint 1 at 0x4011d2: file hmw_2.cpp, line 11.
+(gdb) run
+Starting program: /student/pokorie/hpc/hmw_2
+Missing separate debuginfos, use: dnf debuginfo-install glibc-2.31-4.fc32.x86_64
+Enter a number:
+10
+
+Breakpoint 1, main () at hmw_2.cpp:11
+11              printf("You entered the value: %d\n", n);
+Missing separate debuginfos, use: dnf debuginfo-install libgcc-10.2.1-9.fc32.x86_64 libstdc++-10.2.1-9.fc32.x86_64
+(gdb) print n
+$1 = 10
+(gdb) set n = 100
+"on" or "off" expected.
+(gdb) print n
+$2 = 10
+(gdb) watch n
+Hardware watchpoint 2: n
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /student/pokorie/hpc/hmw_2
+Enter a number:
+12
+
+Breakpoint 1, main () at hmw_2.cpp:11
+11              printf("You entered the value: %d\n", n);
+(gdb) next
+You entered the value: 12
+13      }
+(gdb) next
+0x00007ffff7aab042 in __libc_start_main () from /lib64/libc.so.6
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) watch n
+Please answer y or n.
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /student/pokorie/hpc/hmw_2
+Enter a number:
+34
+
+Breakpoint 1, main () at hmw_2.cpp:11
+11              printf("You entered the value: %d\n", n);
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /student/pokorie/hpc/hmw_2
+Enter a number:
+12
+
+Breakpoint 1, main () at hmw_2.cpp:11
+11              printf("You entered the value: %d\n", n);
+(gdb) next
+You entered the value: 12
+13      }
+(gdb) next
+0x00007ffff7aab042 in __libc_start_main () from /lib64/libc.so.6
+(gdb) next
+Single stepping until exit from function __libc_start_main,
+which has no line number information.
+[Inferior 1 (process 1106398) exited normally]
+(gdb)
+[pokorie@hopper2 week2_hw2]$ g++ corrected_code.cpp -g -Wall -o corrected_code
+[pokorie@hopper2 week2_hw2]$ gdb corrected_code
+GNU gdb (GDB) Fedora 9.1-7.fc32
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from corrected_code...
+(gdb) break 10
+Breakpoint 1 at 0x401196: file corrected_code.cpp, line 10.
+(gdb) run
+Starting program: /student/pokorie/hpc/pokorie/week2_hw2/corrected_code
+Missing separate debuginfos, use: dnf debuginfo-install glibc-2.31-4.fc32.x86_64
+3
+
+Breakpoint 1, main () at corrected_code.cpp:10
+10              long val=factorial(n);
+Missing separate debuginfos, use: dnf debuginfo-install libgcc-10.2.1-9.fc32.x86_64 libstdc++-10.2.1-9.fc32.x86_64
+(gdb) step
+factorial (n=3) at corrected_code.cpp:18
+18              long result(1);
+(gdb) list
+13              return 0;
+14      }
+15
+16      long factorial(int n)
+17      {
+18              long result(1);
+19              while(n>1)
+20              {
+21                      result*=n;
+22                      n--;
+(gdb) watch n
+Hardware watchpoint 2: n
+(gdb) watch result
+Hardware watchpoint 3: result
+(gdb) continue
+Continuing.
+
+Hardware watchpoint 3: result
+
+Old value = 4198544
+New value = 1
+factorial (n=3) at corrected_code.cpp:19
+19              while(n>1)
+(gdb)
+Continuing.
+
+Hardware watchpoint 3: result
+
+Old value = 1
+New value = 3
+factorial (n=3) at corrected_code.cpp:22
+22                      n--;
+(gdb)
+Continuing.
+
+Hardware watchpoint 2: n
+
+Old value = 3
+New value = 2
+factorial (n=2) at corrected_code.cpp:19
+19              while(n>1)
+(gdb)
+Continuing.
+
+Hardware watchpoint 3: result
+
+Old value = 3
+New value = 6
+factorial (n=2) at corrected_code.cpp:22
+22                      n--;
+(gdb)
+Continuing.
+
+Hardware watchpoint 2: n
+
+Old value = 2
+New value = 1
+factorial (n=1) at corrected_code.cpp:19
+19              while(n>1)
+(gdb)
+Continuing.
+
+Watchpoint 2 deleted because the program has left the block in
+which its expression is valid.
+
+Watchpoint 3 deleted because the program has left the block in
+which its expression is valid.
+0x00000000004011a0 in main () at corrected_code.cpp:10
+10              long val=factorial(n);
+(gdb)
+Continuing.
+6[Inferior 1 (process 1113677) exited normally]
+(gdb) quit
+[pokorie@hopper2 week2_hw2]$

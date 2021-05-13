@@ -1,0 +1,71 @@
+Question 1 (35 points): MergeSort using OpenMP
+
+-- Check the difference of OMP section and task from online tutorials (LLNL OpenMP Tuorial and others), and describe shortly.
+The difference between tasks and sections is in the time frame in which the code will execute.
+Sections are enclosed within the sections construct and (unless the nowait clause is specified) threads will not leave it until all sections have been executed.
+Tasks are queued and executed whenever possible at the so-called task scheduling points. Under some conditions, the runtime could be allowed to move task between threads, even in the mid of their lifetime. Such tasks are called untied and an untied task might start executing in one thread, then at some scheduling point it might be migrated by the runtime to another thread.
+
+-- Pick one of them that has a fit for this type of divide-and-conquer recursion problem. Which one did you pick and why? Describe shortly.
+OpenMP static is suited for this job since we know we have two tasks to execute in parallel.
+
+-- Make a first parallel program with your pick. Show the trace result with time for n=64 and p=2 to validate your program. Report the results.
+Results can be found in the file /q1/parallel/mergesort_parallel.txt
+
+-- Test the parallel program with n=1E8 random numbers and 1, 2, 4, 8 threads. Compare wall-clock times using omp_get_wtime(). Do you see a good scalability? Report the times with the different threads.
+        N  Number of processor   Number of threads          Chunk size   Elapsed wall clock time (sec)
+  100000000                  20                   1                   1                         145.101
+         N  Number of processor   Number of threads          Chunk size   Elapsed wall clock time (sec)
+  100000000                  20                   2                   1                         100.499
+         N  Number of processor   Number of threads          Chunk size   Elapsed wall clock time (sec)
+  100000000                  20                   4                   1                         82.8207
+         N  Number of processor   Number of threads          Chunk size   Elapsed wall clock time (sec)
+  100000000                  20                   8                   1                         85.0387
+
+The elapsed time decreased as the number of threads increased until after 4 threads. At 8 threads, the elapsed time increased again
+
+-- If you don’t get a fast or scalable result using multi-threads, we need to optimize the parallel code. One solution is pruning (just work for specific condition using “if” clause”. Create a new task only if the amount of work is sufficient Then, test it the same problem (n=1E8) using 1, 2, 4, 8 threads.
+
+
+Question 2 (35 points): Matrix multiplication using 1-D partitioning
+-- Validate the program with 𝐴.,/ = 𝐵.,/ = 𝑖 × 𝑛 + 𝑗, 𝑛 = 4, and 𝑝 = 16. Initialize the element of matrix value only at root (rank=0) process. Print the results and put it to the document file.
+A:
+0 1 2 3
+4 5 6 7
+8 9 10 11
+12 13 14 15
+
+B:
+0 1 2 3
+4 5 6 7
+8 9 10 11
+12 13 14 15
+
+C:
+56 62 68 74
+152 174 196 218
+248 286 324 362
+344 398 452 506
+
+           N      nprocs         elapsed wall-clock time
+           4          16                      0.00053427
+
+-- Analyze the results with 𝑝 = 1, 4, 9, 16 with n=1440 and 2880 after initializing 𝐴.,/ = 𝐵.,/ = 1 at root process. Measure the time, draw the speedup versus number of processors curve, and the CPU time versus the number of processors curve. Comment on what these curves mean from the point of view of scalability.
+           N      nprocs         elapsed wall-clock time
+        1440           1                         27.6812
+           N      nprocs         elapsed wall-clock time
+        1440           4                         7.41568
+           N      nprocs         elapsed wall-clock time
+        1440           9                         3.61818
+           N      nprocs         elapsed wall-clock time
+        1440          16                         3.27409
+
+           N      nprocs         elapsed wall-clock time
+        2880           1                         302.238
+           N      nprocs         elapsed wall-clock time
+        2880           4                         76.2813
+           N      nprocs         elapsed wall-clock time
+        2880           9                         34.2698
+           N      nprocs         elapsed wall-clock time
+        2880          16                         25.5591
+
+Plot located in fig_cpu.png and fig_speedup.png
