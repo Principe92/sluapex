@@ -47,23 +47,23 @@ int main(int argc, char **argv)
             }
         }
 
-        cout << "A: " << endl;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-                cout << A[i][j] << " ";
-            cout << endl;
-        }
-        cout << endl;
+        // cout << "A: " << endl;
+        // for (int i = 0; i < n; i++)
+        // {
+        //     for (int j = 0; j < n; j++)
+        //         cout << A[i][j] << " ";
+        //     cout << endl;
+        // }
+        // cout << endl;
 
-        cout << "B: " << endl;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-                cout << B[i][j] << " ";
-            cout << endl;
-        }
-        cout << endl;
+        // cout << "B: " << endl;
+        // for (int i = 0; i < n; i++)
+        // {
+        //     for (int j = 0; j < n; j++)
+        //         cout << B[i][j] << " ";
+        //     cout << endl;
+        // }
+        // cout << endl;
     }
 
     MPI_Scatter(&A, rows * n, MPI_INT, &Apart, rows * n, MPI_INT, MASTER, MPI_COMM_WORLD);
@@ -85,14 +85,14 @@ int main(int argc, char **argv)
 
     if (rank == MASTER)
     {
-        cout << "C: " << endl;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-                cout << C[i][j] << " ";
-            cout << endl;
-        }
-        cout << endl;
+        // cout << "C: " << endl;
+        // for (int i = 0; i < n; i++)
+        // {
+        //     for (int j = 0; j < n; j++)
+        //         cout << C[i][j] << " ";
+        //     cout << endl;
+        // }
+        // cout << endl;
 
         etime = MPI_Wtime(); // end time
         cout << "  " << setw(10) << "N"
