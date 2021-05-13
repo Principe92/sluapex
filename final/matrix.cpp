@@ -7,24 +7,6 @@
 
 using namespace std;
 
-template <size_t r, size_t l>
-void printArray(int array[r][l], int size)
-{
-    int i, j;
-
-    for (i = 0; i < size; i++)
-    {
-        for (j = 0; j < size; j++)
-        {
-            cout << array[i][j] << " ";
-        }
-
-        cout << endl;
-    }
-
-    cout << endl;
-}
-
 int main(int argc, char **argv)
 {
     int nprocs, rank;
@@ -47,11 +29,9 @@ int main(int argc, char **argv)
         // fill(A[0], A[0] + n*n, 1);
         // fill(B[0], B[0] + n*n, 1);
 
-        int i, j;
-
-        for (i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
-            for (j = 0; j < n; j++)
+            for (int j = 0; j < n; j++)
             {
                 A[i][j] = i * n + j;
                 B[i][j] = i * n + j;
@@ -59,10 +39,22 @@ int main(int argc, char **argv)
         }
 
         cout << "A: " << endl;
-        printArray(A, n);
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+                cout << A[i][j] << " ";
+            cout << endl;
+        }
+        cout << endl;
 
         cout << "B: " << endl;
-        printArray(B, n);
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+                cout << B[i][j] << " ";
+            cout << endl;
+        }
+        cout << endl;
     }
 
     MPI_Scatter(&A, n, MPI_INT, &Apart, n, MPI_INT, MASTER, MPI_COMM_WORLD);
@@ -82,7 +74,13 @@ int main(int argc, char **argv)
     MPI_Gather(&Cpart, n, MPI_INT, &C, n, MPI_INT, MASTER, MPI_COMM_WORLD);
 
     cout << "C: " << endl;
-    printArray(C, n);
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+            cout << C[i][j] << " ";
+        cout << endl;
+    }
+    cout << endl;
 
     MPI_Finalize();
 
